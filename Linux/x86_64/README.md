@@ -1,0 +1,8 @@
+# 開発環境
+
+## Linux x86_64
+
+- Windows 11 WSL2 Ubuntu20.04
+- NASM 2.14.02
+- peda
+  - https://github.com/longld/peda
