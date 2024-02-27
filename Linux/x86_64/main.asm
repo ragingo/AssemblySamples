@@ -7,6 +7,7 @@ section .text
     extern sample004_itoa
     extern sample005_kuku
     extern sample006_file_write
+    extern sample007_bmp
 
 _start:
     push rbp
@@ -19,6 +20,7 @@ _start:
     call sample004_itoa
     call sample005_kuku
     call sample006_file_write
+    call sample007_bmp
 
     call temp_samples
 
