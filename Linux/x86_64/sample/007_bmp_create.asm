@@ -4,7 +4,7 @@ section .data
     filename db '/home/ragingo/temp/a.bmp', 0
 
 section .text
-    global sample007_bmp
+    global sample007_bmp_create
     extern fopen
     extern sys_write
 
@@ -20,7 +20,7 @@ section .text
 %define BITMAP_FILE_SIZE (BITMAP_HEADER_SIZE + BITMAP_DATA_SIZE)
 %define BITMAP_ROW_STRIDE (BITMAP_WIDTH * BITMAP_BITS_PER_PIXEL / 8)
 
-sample007_bmp:
+sample007_bmp_create:
     push rbp
     mov rbp, rsp
 
