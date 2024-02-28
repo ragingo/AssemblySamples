@@ -2,11 +2,23 @@
 
 section .text
     extern strlen
+    global sys_read
     global sys_write
     global sys_open
+    global sys_lseek
     global sys_creat
     global sys_nanosleep
     global sys_exit
+
+;==================================================
+; Description
+;   read system call
+; Parameters
+;   rdi: fd, rsi: buf, rdx: count
+;==================================================
+sys_read:
+    system_call SYS_READ
+    ret
 
 ;==================================================
 ; Description
@@ -28,6 +40,18 @@ sys_write:
 ;==================================================
 sys_open:
     system_call SYS_OPEN
+    ret
+
+;==================================================
+; Description
+;   lseek system call
+; Parameters
+;   rdi: fd, rsi: offset, rdx: whence
+; Returns
+;   rax: offset or -1
+;==================================================
+sys_lseek:
+    system_call SYS_LSEEK
     ret
 
 ;==================================================
