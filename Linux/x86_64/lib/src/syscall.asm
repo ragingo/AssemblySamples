@@ -44,6 +44,18 @@ sys_open:
 
 ;==================================================
 ; Description
+;   fstat system call
+; Parameters
+;   rdi: fd, rsi: struct stat *buf
+; Returns
+;   rax: 0 or -1
+;==================================================
+sys_fstat:
+    system_call SYS_NEWFSTAT
+    ret
+
+;==================================================
+; Description
 ;   lseek system call
 ; Parameters
 ;   rdi: fd, rsi: offset, rdx: whence
