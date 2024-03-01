@@ -3,15 +3,37 @@
 section .data
     filename db '/home/ragingo/temp/a.bmp', 0
 
+    ; https://learn.microsoft.com/ja-jp/windows/win32/api/wingdi/ns-wingdi-bitmapfileheader
+    struc BITMAPFILEHEADER
+        .bfType      resw 1
+        .bfSize      resd 1
+        .bfReserved1 resw 1
+        .bfReserved2 resw 1
+        .bfOffBits   resd 1
+    endstruc
+
+    ; https://learn.microsoft.com/ja-jp/windows/win32/api/wingdi/ns-wingdi-bitmapinfoheader
+    struc BITMAPINFOHEADER
+        .biSize          resd 1
+        .biWidth         resd 1
+        .biHeight        resd 1
+        .biPlanes        resw 1
+        .biBitCount      resw 1
+        .biCompression   resd 1
+        .biSizeImage     resd 1
+        .biXPelsPerMeter resd 1
+        .biYPelsPerMeter resd 1
+        .biClrUsed       resd 1
+        .biClrImportant  resd 1
+    endstruc
+
 section .text
     global sample007_bmp_create
     extern fopen
     extern sys_write
 
 %define BI_RGB 0
-%define BITMAPFILEHEADER_SIZE 14
-%define BITMAPINFOHEADER_SIZE 40
-%define BITMAP_HEADER_SIZE (BITMAPFILEHEADER_SIZE + BITMAPINFOHEADER_SIZE)
+%define BITMAP_HEADER_SIZE (BITMAPFILEHEADER_size + BITMAPINFOHEADER_size)
 %define BITMAP_PIXEL_OFFSET BITMAP_HEADER_SIZE
 %define BITMAP_WIDTH 32
 %define BITMAP_HEIGHT 32
@@ -51,7 +73,6 @@ create_bitmap:
     mov rbp, rsp
 
     ; file header
-    ; https://learn.microsoft.com/ja-jp/windows/win32/api/wingdi/ns-wingdi-bitmapfileheader
     mov word  [rdi +  0], MAKE_WORD('B', 'M')   ; bfType
     mov dword [rdi +  2], BITMAP_FILE_SIZE      ; bfSize
     mov word  [rdi +  6], 0                     ; bfReserved1
@@ -59,8 +80,7 @@ create_bitmap:
     mov dword [rdi + 10], BITMAP_PIXEL_OFFSET   ; bfOffBits
 
     ; info header
-    ; https://learn.microsoft.com/ja-jp/windows/win32/api/wingdi/ns-wingdi-bitmapinfoheader
-    mov dword [rdi + 14], BITMAPINFOHEADER_SIZE ; biSize
+    mov dword [rdi + 14], BITMAPINFOHEADER_size ; biSize
     mov dword [rdi + 18], BITMAP_WIDTH          ; biWidth
     mov dword [rdi + 22], BITMAP_HEIGHT         ; biHeight
     mov word  [rdi + 26], 1                     ; biPlanes
