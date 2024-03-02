@@ -73,24 +73,25 @@ create_bitmap:
     mov rbp, rsp
 
     ; file header
-    mov word  [rdi +  0], MAKE_WORD('B', 'M')   ; bfType
-    mov dword [rdi +  2], BITMAP_FILE_SIZE      ; bfSize
-    mov word  [rdi +  6], 0                     ; bfReserved1
-    mov word  [rdi +  8], 0                     ; bfReserved2
-    mov dword [rdi + 10], BITMAP_PIXEL_OFFSET   ; bfOffBits
+    mov word  [rdi + BITMAPFILEHEADER.bfType],      MAKE_WORD('B', 'M')
+    mov dword [rdi + BITMAPFILEHEADER.bfSize],      BITMAP_FILE_SIZE
+    mov word  [rdi + BITMAPFILEHEADER.bfReserved1], 0
+    mov word  [rdi + BITMAPFILEHEADER.bfReserved2], 0
+    mov dword [rdi + BITMAPFILEHEADER.bfOffBits],   BITMAP_PIXEL_OFFSET
 
     ; info header
-    mov dword [rdi + 14], BITMAPINFOHEADER_size ; biSize
-    mov dword [rdi + 18], BITMAP_WIDTH          ; biWidth
-    mov dword [rdi + 22], BITMAP_HEIGHT         ; biHeight
-    mov word  [rdi + 26], 1                     ; biPlanes
-    mov word  [rdi + 28], BITMAP_BITS_PER_PIXEL ; biBitCount
-    mov dword [rdi + 30], BI_RGB                ; biCompression
-    mov dword [rdi + 34], BITMAP_DATA_SIZE      ; biSizeImage
-    mov dword [rdi + 38], 0                     ; biXPelsPerMeter
-    mov dword [rdi + 42], 0                     ; biYPelsPerMeter
-    mov dword [rdi + 46], 0                     ; biClrUsed
-    mov dword [rdi + 50], 0                     ; biClrImportant
+    mov rax, BITMAPFILEHEADER_size
+    mov dword [rdi + rax + BITMAPINFOHEADER.biSize],          BITMAPINFOHEADER_size
+    mov dword [rdi + rax + BITMAPINFOHEADER.biWidth],         BITMAP_WIDTH
+    mov dword [rdi + rax + BITMAPINFOHEADER.biHeight],        BITMAP_HEIGHT
+    mov word  [rdi + rax + BITMAPINFOHEADER.biPlanes],        1
+    mov word  [rdi + rax + BITMAPINFOHEADER.biBitCount],      BITMAP_BITS_PER_PIXEL
+    mov dword [rdi + rax + BITMAPINFOHEADER.biCompression],   BI_RGB
+    mov dword [rdi + rax + BITMAPINFOHEADER.biSizeImage],     BITMAP_DATA_SIZE
+    mov dword [rdi + rax + BITMAPINFOHEADER.biXPelsPerMeter], 0
+    mov dword [rdi + rax + BITMAPINFOHEADER.biYPelsPerMeter], 0
+    mov dword [rdi + rax + BITMAPINFOHEADER.biClrUsed],       0
+    mov dword [rdi + rax + BITMAPINFOHEADER.biClrImportant],  0
 
     ; pixels
     push rdi
