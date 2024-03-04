@@ -131,10 +131,12 @@ fopen:
     cmp r8, 'r'
     jne .fopen.mode_simple.not_read
     mov rsi, O_RDONLY
+    jmp .fopen.call_open
 .fopen.mode_simple.not_read:
     cmp r8, 'w'
     jne .fopen.mode_simple.not_write
     mov rsi, O_WRONLY
+    jmp .fopen.call_open
 .fopen.mode_simple.not_write:
     cmp r8, 'a'
     jne .fopen.mode_default ; デフォルトに飛ばす
