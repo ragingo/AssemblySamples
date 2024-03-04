@@ -5,6 +5,7 @@ section .text
     global sys_read
     global sys_write
     global sys_open
+    global sys_fstat
     global sys_lseek
     global sys_creat
     global sys_nanosleep
