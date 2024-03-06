@@ -8,6 +8,7 @@ section .text
     extern sample005_kuku
     extern sample006_file_write
     extern sample007_bmp_create
+    extern sample008_file_info
 
 _start:
     push rbp
@@ -21,6 +22,7 @@ _start:
     call sample005_kuku
     call sample006_file_write
     call sample007_bmp_create
+    call sample008_file_info
 
     call temp_samples
 
